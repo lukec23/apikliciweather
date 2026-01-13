@@ -86,6 +86,7 @@ for k in koordinate:
 print(mesto)"""
 # 6: Koliko mest bo imelo jutri maksimalno temperaturo nad 20°C?
 # Namig: Preštej mesta, kjer je temperature_2m_max[1] > 20
+"""
 mesto=[]
 for k in koordinate:
     url=f"https://api.open-meteo.com/v1/forecast?latitude={k["lat"]}&longitude={k["lon"]}&daily=temperature_2m_max&timezone=Europe%2FBerlin"
@@ -94,15 +95,45 @@ for k in koordinate:
 
     if v > 20:
         mesto.append(k["ime"])
-print(mesto)
-
+print(mesto)"""
 # 7: Katero mesto ima najhitrejši veter v naslednjih 7 dneh? Izpiši tudi hitrost vetra.
 # Namig: Preveri max() vrednost v ["daily"]["wind_speed_10m_max"]
+"""
+hitrost=0
+hitr_mesto=""
+for k in koordinate:
+    url=f"https://api.open-meteo.com/v1/forecast?latitude={k["lat"]}&longitude={k["lon"]}&daily=wind_speed_10m_max&timezone=Europe%2FBerlin"
+    call=requests.get(url).json()
+    h=max(call["daily"]["wind_speed_10m_max"])
 
+    if h>hitrost:
+        hitrost=h
+        hitr_mesto=k["ime"]
+print(hitr_mesto,hitrost)"""
 # 8: V katerem mestu je najdaljši dan (razlika med zahodom in vzhodom sonca)?
 # Namig: Uporabi DateTime https://www.w3schools.com/python/python_datetime.asp
+"""
+svetloba=0
+svet_mesto=""
+for k in koordinate:
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={k["lat"]}&longitude={k["lon"]}&daily=daylight_duration&timezone=Europe%2FBerlin"
+    call=requests.get(url).json()
+    s=max(call["daily"]["daylight_duration"])
 
+    if s>svetloba:
+        svetloba=s
+        svet_mesto=k["ime"]
+print(svet_mesto,svetloba)
+"""
 # 9: Ugotovi, koliko mest bo  v naslednjih 7 dneh brez padavin
 # Namig: Preveri, če ima mesto vsaj eno ničlo v precipitation_sum
+p_mesto=[]
+for k in koordinate:
+    url=f"https://api.open-meteo.com/v1/forecast?latitude={k["lat"]}&longitude={k["lon"]}&daily=precipitation_sum&timezone=Europe%2FBerlin"
+    call=requests.get(url).json()
+    p=call["daily"]["precipitation_sum"]
 
+    if 0 in p:
+        p_mesto.append(k["ime"])
+print(p_mesto)
 # 10: Poljubna naloga!
