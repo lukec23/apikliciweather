@@ -127,7 +127,7 @@ print(svet_mesto,svetloba)
 """
 # 9: Ugotovi, koliko mest bo  v naslednjih 7 dneh brez padavin
 # Namig: Preveri, če ima mesto vsaj eno ničlo v precipitation_sum
-p_mesto=[]
+"""p_mesto=[]
 for k in koordinate:
     url=f"https://api.open-meteo.com/v1/forecast?latitude={k["lat"]}&longitude={k["lon"]}&daily=precipitation_sum&timezone=Europe%2FBerlin"
     call=requests.get(url).json()
@@ -135,5 +135,10 @@ for k in koordinate:
 
     if 0 in p:
         p_mesto.append(k["ime"])
-print(p_mesto)
+print(p_mesto)"""
 # 10: Poljubna naloga!
+
+url="https://vreme.arso.gov.si/api/1.0/locations/?loc=kranj"
+call=requests.get(url).json()
+temperatura = call["features"][0]["properties"]["days"][0]["timeline"][0]["t"]
+print(temperatura)
